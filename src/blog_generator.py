@@ -254,7 +254,6 @@ KURALLAR:
         """
         import re
         
-        # Remove Jekyll front matter if present
         content_md = re.sub(r'^---.*?---\n', '', content_md, flags=re.DOTALL)
         
         html = content_md

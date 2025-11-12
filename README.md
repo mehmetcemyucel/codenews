@@ -6,7 +6,7 @@ A privacy-friendly RSS intelligence bot that filters AI and software development
 - 📡 **Smart harvesting** – Hourly RSS checks with request throttling and keyword-based relevance scoring powered by a single `keywords` list.
 - 🤖 **Personalised feed** – Feedback-driven ML engine that rescores content based on your 👍/👎 interactions.
 - 💬 **Telegram bot** – Compact summaries, inline feedback buttons, feed management commands, and ad-hoc trigger jobs.
-- 📝 **Weekly Telegram blog digest** – Curated Telegraph page instead of local Jekyll posts; perfect for sharing directly in Telegram channels.
+- 📝 **Weekly Telegram blog digest** – Curated Telegraph page perfect for sharing directly in Telegram channels.
 - 🌍 **Runtime-first configuration** – Every operational parameter (thresholds, schedules, limits) can be injected via env vars for Docker, GitHub Actions, or local shells.
 - 🛡️ **Open licensing** – Released under Apache 2.0 so individuals and teams can extend it freely.
 
