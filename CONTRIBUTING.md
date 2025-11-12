@@ -1,6 +1,6 @@
 # Contributing to CodeNews
 
-Thanks for helping improve CodeNews! This document outlines the ground rules for contributing to the project, which is distributed under the **CodeNews Personal Use License** (non-commercial). Please read it fully before opening an issue or Pull Request (PR).
+Thanks for helping improve CodeNews! This document outlines the ground rules for contributing to the project, which is distributed under the **Apache License 2.0**. Please read it fully before opening an issue or Pull Request (PR).
 
 ## 1. Code of Conduct
 - Be respectful, constructive, and inclusive.
@@ -8,9 +8,9 @@ Thanks for helping improve CodeNews! This document outlines the ground rules for
 - Avoid sharing proprietary or confidential data in issues/PRs.
 
 ## 2. License & Usage
-- By contributing, you agree that your work is licensed under the CodeNews Personal Use License.
-- Do not submit code or dependencies that impose commercial or conflicting terms.
-- Confirm in your PR description that you understand the project cannot be used commercially without permission.
+- By contributing, you agree that your work is licensed under the Apache License 2.0.
+- Keep dependencies compatible with Apache-2.0 (or similarly permissive) terms.
+- Confirm in your PR description that you have the right to submit the contribution under Apache-2.0.
 
 ## 3. GitHub Flow
 1. Fork the repository and clone your fork.
@@ -42,7 +42,7 @@ Before requesting review, ensure that:
 - [ ] Documentation reflects the change.
 - [ ] Secrets are not committed.
 - [ ] The PR description explains **what** changed, **why**, and how to test.
-- [ ] You added a note confirming awareness of the non-commercial license.
+- [ ] You noted that the contribution is provided under Apache-2.0.
 
 ## 8. Communication
 - Use GitHub Issues for bugs/enhancements.
@@ -50,4 +50,3 @@ Before requesting review, ensure that:
 - When in doubt about scope or direction, open a draft PR for early feedback.
 
 Thanks again for contributing and keeping CodeNews community-friendly! 🙌
-

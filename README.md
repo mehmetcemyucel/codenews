@@ -8,7 +8,7 @@ A privacy-friendly RSS intelligence bot that filters AI and software development
 - 💬 **Telegram bot** – Compact summaries, inline feedback buttons, feed management commands, and ad-hoc trigger jobs.
 - 📝 **Weekly Telegram blog digest** – Curated Telegraph page instead of local Jekyll posts; perfect for sharing directly in Telegram channels.
 - 🌍 **Runtime-first configuration** – Every operational parameter (thresholds, schedules, limits) can be injected via env vars for Docker, GitHub Actions, or local shells.
-- 🛡️ **Personal-use license** – Distributed with a non-commercial license to keep the project community-friendly.
+- 🛡️ **Open licensing** – Released under Apache 2.0 so individuals and teams can extend it freely.
 
 ## Architecture At A Glance
 ```
@@ -100,11 +100,11 @@ pytest
 Run the suite (or targeted modules) before opening a PR to keep GitHub Actions green.
 
 ## Contributing
-Contributions are welcome as long as they respect the non-commercial license. Review `CONTRIBUTING.md` for:
+Contributions are welcome under Apache 2.0. Review `CONTRIBUTING.md` for:
 
 - Branch/PR workflow (GitHub Flow).
 - Coding style expectations.
 - Commit hygiene and review checklist.
 
 ## License
-CodeNews ships with the **CodeNews Personal Use License** (see `LICENSE`). You may fork, modify, and run the project for personal or educational purposes, but any commercial use (hosting, resale, paid subscriptions, consulting bundles, etc.) requires explicit written permission from the author.
+CodeNews is released under the [Apache License 2.0](LICENSE).

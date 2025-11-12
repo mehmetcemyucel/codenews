@@ -73,9 +73,9 @@ pytest
 3. Make changes + tests: `pytest`.
 4. Commit with clear messages: `git commit -m "feat: add Telegraph digest publisher"`.
 5. Push and open a Pull Request against `main`.
-6. Fill in the PR checklist (tests, docs, non-commercial confirmation).
+6. Fill in the PR checklist (tests, docs, Apache-2.0 confirmation).
 
-> **Note:** All contributions are accepted under the CodeNews Personal Use License. By opening a PR you confirm that your work—and the resulting project—will not be used commercially unless explicitly authorised.
+> **Note:** All contributions are accepted under the Apache License 2.0. By opening a PR you confirm that your work—and the resulting project—can be licensed under Apache-2.0.
 
 ## 4. Need More?
 - **Deployment tips** (GitHub Actions, VPS, SSH, secrets) → `DEPLOYMENT.md`.

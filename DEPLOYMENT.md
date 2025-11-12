@@ -1,6 +1,6 @@
 # 🚀 Deployment Guide (English)
 
-This document explains how to deploy CodeNews with Docker, GitHub Actions, or plain SSH. It assumes the non-commercial License in `LICENSE`.
+This document explains how to deploy CodeNews with Docker, GitHub Actions, or plain SSH. The project is distributed under the Apache License 2.0 (`LICENSE`).
 
 ## 1. Prerequisites
 - Docker Engine + Docker Compose (v2+ recommended)
@@ -95,4 +95,3 @@ docker compose logs -f
 - Never commit `.env` or secrets to the repository.
 
 Happy shipping! 🛳️
-
