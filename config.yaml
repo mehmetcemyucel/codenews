@@ -1,0 +1,65 @@
+# CodeNews Configuration
+
+# RSS Monitoring
+rss_check_interval_hours: 3
+max_items_per_feed: 50
+request_timeout_seconds: 30
+
+# Content Filtering
+keywords:
+  - "artificial intelligence"
+  - "machine learning"
+  - "deep learning"
+  - "neural network"
+  - "AI"
+  - "LLM"
+  - "GPT"
+  - "transformer"
+  - "yapay zeka"
+  - "software"
+  - "programming"
+  - "developer"
+  - "coding"
+  - "framework"
+  - "library"
+  - "API"
+  - "DevOps"
+  - "yazılım"
+  - "geliştirme"
+
+# Telegram
+max_notifications_per_hour: 50
+summary_max_length: 300  # Increased for better headline format
+translate_summaries_to_turkish: true
+
+# Content Freshness - Only send recent news
+max_article_age_hours: 48  # Only articles from last 2 days
+news_keywords:
+  - "announces"
+  - "releases"
+  - "launches"
+  - "introduces"
+  - "unveils"
+  - "reveals"
+  - "breaks"
+  - "discovers"
+  - "achieves"
+  - "duyurdu"
+  - "açıkladı"
+  - "yayınladı"
+  - "tanıttı"
+  - "başlattı"
+
+# Personalization
+initial_relevance_threshold: 0.1  # Lowered from 0.3 to allow more content through
+learning_rate: 0.1
+min_feedback_count: 5
+
+# Telegram Digest Generation
+blog_schedule_day: 6  # Sunday (0=Monday, 6=Sunday)
+blog_schedule_hour: 6
+blog_schedule_minute: 0
+blog_min_items: 5
+blog_max_items: 15
+telegraph_short_name: "CodeNews"
+telegraph_author_name: "CodeNews Bot"

@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  codenews:
+    build: .
+    container_name: codenews
+    restart: unless-stopped
+    environment:
+      - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
+      - TELEGRAM_CHAT_ID=${TELEGRAM_CHAT_ID}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - TIMEZONE=${TIMEZONE:-Europe/Istanbul}
+      - LOG_LEVEL=${LOG_LEVEL:-INFO}
+    volumes:
+      # Persist data, logs, and exports
+      - ./data:/app/data
+      - ./logs:/app/logs
+      - ./exports:/app/exports
+    networks:
+      - codenews-network
+
+networks:
+  codenews-network:
+    driver: bridge

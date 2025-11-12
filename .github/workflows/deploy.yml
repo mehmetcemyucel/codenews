@@ -1,0 +1,157 @@
+name: Deploy to VPS
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:  # Manual trigger
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Free Disk Space (Keep Build Cache)
+        run: |
+          # Remove unnecessary pre-installed tools (save ~15GB)
+          sudo rm -rf /usr/share/dotnet
+          sudo rm -rf /opt/ghc
+          sudo rm -rf /usr/local/share/boost
+          sudo rm -rf "$AGENT_TOOLSDIRECTORY"
+          
+          # Clean only stopped containers and dangling images (keep build cache)
+          docker container prune -f
+          docker image prune -f --filter "dangling=true"
+          
+          # Show disk space
+          echo "Disk space after cleanup:"
+          df -h
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract metadata for Docker
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ghcr.io/${{ github.repository }}
+          tags: |
+            type=raw,value=latest
+            type=sha,prefix={{branch}}-
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=registry,ref=ghcr.io/${{ github.repository }}:buildcache
+          cache-to: type=registry,ref=ghcr.io/${{ github.repository }}:buildcache,mode=max
+
+      - name: Deploy to VPS
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USERNAME }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          port: ${{ secrets.VPS_PORT }}
+          script: |
+            # Set deployment path (default: ~/codenews)
+            DEPLOY_PATH="${{ secrets.VPS_PATH }}"
+            if [ -z "$DEPLOY_PATH" ]; then
+              DEPLOY_PATH="$HOME/codenews"
+            fi
+            
+            echo "Deploying to: $DEPLOY_PATH"
+            
+            # Create app directory if not exists
+            mkdir -p "$DEPLOY_PATH"
+            cd "$DEPLOY_PATH"
+            
+            # Create .env file with secrets
+            cat > .env << EOF
+            TELEGRAM_BOT_TOKEN=${{ secrets.TELEGRAM_BOT_TOKEN }}
+            TELEGRAM_CHAT_ID=${{ secrets.TELEGRAM_CHAT_ID }}
+            OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}
+            TIMEZONE=${{ secrets.TIMEZONE }}
+            LOG_LEVEL=${{ secrets.LOG_LEVEL }}
+            EOF
+            
+            # Login to GitHub Container Registry
+            echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+            
+            # Create docker-compose.yml
+            cat > docker-compose.yml << 'EOF'
+            version: '3.8'
+            
+            services:
+              codenews:
+                image: ghcr.io/${{ github.repository }}:latest
+                container_name: codenews
+                restart: unless-stopped
+                env_file:
+                  - .env
+                volumes:
+                  - ./data:/app/data
+                  - ./logs:/app/logs
+                  - ./exports:/app/exports
+            EOF
+            
+            # Create necessary directories
+            mkdir -p data logs exports
+            
+            # Pull latest image
+            # Note: feeds.json will be auto-initialized from image defaults via entrypoint
+            docker pull ghcr.io/${{ github.repository }}:latest
+            
+            # Stop and remove old container
+            docker compose down || true
+            
+            # Start new container
+            docker compose up -d
+            
+            # Show logs
+            echo "Deployment successful!"
+            docker compose logs --tail=20
+            
+            # Clean up old images
+            docker image prune -f
+
+      - name: Verify deployment
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USERNAME }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          port: ${{ secrets.VPS_PORT }}
+          script: |
+            # Set deployment path (default: ~/codenews)
+            DEPLOY_PATH="${{ secrets.VPS_PATH }}"
+            if [ -z "$DEPLOY_PATH" ]; then
+              DEPLOY_PATH="$HOME/codenews"
+            fi
+            
+            cd "$DEPLOY_PATH"
+            
+            if docker ps | grep -q codenews; then
+              echo "✅ CodeNews container is running at: $DEPLOY_PATH"
+              docker ps | grep codenews
+            else
+              echo "❌ CodeNews container is not running"
+              docker compose logs --tail=50
+              exit 1
+            fi
