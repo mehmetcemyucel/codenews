@@ -1,6 +1,6 @@
 # CodeNews 🤖
 
-A privacy-friendly RSS intelligence bot that filters AI and software development news, personalises Telegram notifications, and publishes weekly Telegraph digests—without maintaining a static Jekyll blog. All runtime parameters can now be overridden through environment variables, making the project portable across laptops, containers, and CI runs.
+A privacy-friendly RSS intelligence bot that filters AI and software development news, personalises Telegram notifications, and publishes weekly Telegraph digests. All runtime parameters can now be overridden through environment variables, making the project portable across laptops, containers, and CI runs.
 
 ## Features
 - 📡 **Smart harvesting** – Hourly RSS checks with request throttling and keyword-based relevance scoring powered by a single `keywords` list.
